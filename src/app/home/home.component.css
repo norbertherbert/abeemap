@@ -1,0 +1,15 @@
+#component-container {
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#component-header {
+    flex: 0 0;
+}
+
+#component-body {
+    flex: 1 1;
+    overflow: auto;
+    padding: 20px;
+}

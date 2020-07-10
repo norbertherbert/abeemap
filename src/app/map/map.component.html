@@ -1,0 +1,71 @@
+<div id="component-container">
+
+<div id="component-header">
+
+  <button mat-icon-button color="primary" aria-label="Reload markers" 
+    (click)="gatewaysVectorSource.refresh(); beaconsVectorSource.refresh(); loadMarkers();"
+  >
+    <mat-icon>refresh</mat-icon>
+  </button>
+
+  <mat-form-field>
+    <mat-label>Device EUI: </mat-label>
+    <mat-select id="deviceEUI" [(value)]="deviceEUI" (selectionChange)="loadMarkers()">
+      <mat-option value="">all devices</mat-option>
+      <mat-option *ngFor="let dev of devs" value={{dev.EUI}}>{{dev.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+
+  <mat-form-field>
+    <mat-label># of markers: </mat-label>
+    <mat-select id="limit" [(value)]="limit" (selectionChange)="loadMarkers()">
+      <mat-option value="1">latest</mat-option>
+      <mat-option value="10">10</mat-option>
+      <mat-option value="20">20</mat-option>
+      <mat-option value="50" selected>50</mat-option>
+      <mat-option value="100">100</mat-option>
+      <mat-option value="500">500</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-button aria-label="Reload markers" (click)="this.zoomToLatest();">
+    <mat-icon>zoom_in</mat-icon>Zoom to latest
+  </button>
+
+  &nbsp;&nbsp;&nbsp;
+  <mat-checkbox [(ngModel)]="showGateways" (change)="updateGateways()" checked>LoRaWAN Gateways</mat-checkbox>
+
+  &nbsp;&nbsp;&nbsp;
+  <mat-checkbox [(ngModel)]="showBeacons" (change)="updateBeacons()">BLE Beacons</mat-checkbox>
+
+  &nbsp;&nbsp;&nbsp;
+  <mat-checkbox [(ngModel)]="showMarkers" (change)="updateMarkers()" checked>Tracked Objects</mat-checkbox>
+
+  &nbsp;&nbsp;&nbsp;
+  <mat-checkbox [(ngModel)]="showCircles" (change)="updateCircles()">Position Accuracy</mat-checkbox>
+
+  &nbsp;&nbsp;&nbsp;
+  <mat-checkbox [(ngModel)]="showLines" (change)="updateLines()">Lines</mat-checkbox>
+
+</div>
+
+<div id="component-body" class="main-map-container mat-elevation-z8">
+
+  <div id="map"></div>
+
+  <div id="map-footer">
+    <div id="map-footer-legends">
+      <div><img height="30" src="assets/marker-icon-green.png">WiFi</div>
+      <div><img height="30" src="assets/marker-icon-yellow.png">LP-GPS</div>
+      <div><img height="30" src="assets/marker-icon-red.png">GPS</div>
+      <div><img height="30" src="assets/marker-icon-blue.png">BLE</div>
+    </div>
+  </div>
+
+  <div id="marker-text-overlay"></div>
+
+</div>
+
+</div>

@@ -1,0 +1,20 @@
+
+<mat-card>
+  <mat-card-title>
+    User Profile
+  </mat-card-title>
+  <mat-card-content>
+    <table>
+      <tr>
+        <td>Prefix:</td><td>{{authService.userId.split('/')[0]}}</td>
+      </tr>
+      <tr>
+        <td>User ID:</td><td>{{authService.userId.split('/')[1]}}</td>
+      </tr>
+        <td>Scope:</td><td>{{authService.scope[0]}}</td>
+      <tr>
+        <td>Session expires:</td><td>{{authService.getExp()}}</td>
+      </tr>
+    </table>
+  </mat-card-content>
+</mat-card>

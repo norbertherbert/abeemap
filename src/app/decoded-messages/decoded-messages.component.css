@@ -1,0 +1,50 @@
+#component-container {
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#component-header {
+    flex: 0 0;
+}
+
+#component-body {
+    flex: 1 1;
+    overflow: auto;
+}
+
+.table-container {
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+}
+/* table tr:nth-child(even) { 
+    background-color: #f2f2f2; 
+} */
+table tr:hover {
+    /* background-color: #ddd;  */
+    background-color: #f2f2f2; 
+}
+table td.tools {
+    white-space: nowrap;
+}
+
+.mat-cell, .mat-header-cell {
+    padding-left: 15px;
+    white-space: pre-wrap;
+}
+
+.loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

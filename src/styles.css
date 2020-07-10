@@ -1,1 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body, app-devices, app-map, app-resolved-messages, app-decoded-messages, app-home { 
+    height: 100%;
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+}
+body { font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* app-map {
+
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+
+    display: flex;
+    flex-flow: row nowrap;
+} */
+
+
+.blue-snackbar {
+    background: #0464b3;
+    width: 100%;
+}
+
+.red-snackbar {
+    background: #b33128;
+    width: 100%;
+}
+
+.green-snackbar {
+    background: #0a6b0a;
+    width: 100%;
+}
+
+.ol-zoom {
+    left: unset;
+    top: unset;
+    right: 5px;
+    bottom: 50px;
+}

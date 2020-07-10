@@ -1,0 +1,119 @@
+<div class="main-page-container">
+
+<mat-toolbar color="primary" class="toolbar">
+
+  <!-- <app-headnav-list (sidenavToggle)="sidenav.toggle()"></app-headnav-list> -->
+
+  <button
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="sidenav.toggle()"
+    *ngIf="(isHandset$ | async)"
+  >
+  <!-- *ngIf="isHandset$ | async" -->
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <div class="title"><span>{{title}}</span></div>  
+
+  <div *ngIf="!(isHandset$ | async)" class="menu-items-parent">
+
+    <div class="menu-items-left">
+      <a mat-button [routerLink]="['/home']" routerLinkActive="active-link-header">Home</a>
+      <a mat-button [routerLink]="['/devices']" routerLinkActive="active-link-header">Devices</a>
+      <a mat-button [routerLink]="['/map']" routerLinkActive="active-link-header">Map</a>
+      <a mat-button [routerLink]="['/resolved-messages']" routerLinkActive="active-link-header">Resolved Logs</a>
+      <a mat-button [routerLink]="['/decoded-messages']" routerLinkActive="active-link-header">Decoded Logs</a>
+    </div>
+
+    <div class="menu-items-right">
+      <a *ngIf="!userId" mat-button (click)="login()">
+          login
+      </a>
+      <a *ngIf="userId" mat-button [matMenuTriggerFor]="profilemenuHeader">
+          {{userId.split('/')[1].split('@')[0]}}
+          <mat-icon>arrow_right</mat-icon>
+      </a>
+    </div>
+
+    <mat-menu #profilemenuHeader="matMenu">
+        <button mat-menu-item routerLink="/user"       routerLinkActive="active-link" (click)="sidenavClose(sidenav)">profile</button>
+        <button mat-menu-item (click)="logout()">logout</button>
+    </mat-menu>
+
+  </div>
+
+
+</mat-toolbar>
+
+
+<mat-sidenav-container class="sidenav-container">
+  <!-- <mat-sidenav #sidenav class="sidenav" fixedInViewport
+    [fixedTopGap]="(isHandset$ | async) ? '0' : '64'"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >  -->
+  <mat-sidenav #sidenav class="sidenav" fixedInViewport
+    [fixedTopGap]="(isHandset$ | async) ? '0' : '64'"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="false"
+  > 
+    <!-- <mat-toolbar>
+      Menu
+    </mat-toolbar> -->
+
+    <mat-divider></mat-divider>
+    <a mat-menu-item routerLink="/"    routerLinkActive="active-link-side" (click)="sidenavClose(sidenav)">
+        <span class="mat-title">Main menu</span>
+    </a>
+    <mat-divider></mat-divider>
+
+    <mat-nav-list>
+
+      <!-- <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list> -->
+      <a mat-menu-item routerLink="/home" routerLinkActive="active-link-side" (click)="sidenavClose(sidenav)">Home</a>
+      <a mat-menu-item routerLink="/devices" routerLinkActive="active-link-side" (click)="sidenavClose(sidenav)">Devices</a>
+      <a mat-menu-item routerLink="/map" routerLinkActive="active-link-side" (click)="sidenavClose(sidenav)">Map</a>
+      <a mat-menu-item routerLink="/resolved-messages" routerLinkActive="active-link-side" (click)="sidenavClose(sidenav)">Resolved Logs</a>
+      <a mat-menu-item routerLink="/decoded-messages" routerLinkActive="active-link-side" (click)="sidenavClose(sidenav)">Decoded Logs</a>
+      <!-- <a mat-menu-item routerLink="/codec-tool" routerLinkActive="active-link-side" (click)="sidenavClose(sidenav)">CoDec Tool</a> -->
+      <!-- <a mat-menu-item routerLink="/settings" routerLinkActive="active-link-side" (click)="sidenavClose(sidenav)">Settings</a> -->
+      <!-- <a mat-menu-item routerLink="/user" routerLinkActive="active-link-side" (click)="sidenavClose(sidenav)">User</a> -->
+      <mat-divider></mat-divider>
+
+
+      <div *ngIf="(isHandset$ | async)">
+        <a *ngIf="!userId" mat-menu-item (click)="login()">
+            login
+        </a>
+        <a *ngIf="userId" mat-menu-item [matMenuTriggerFor]="profilemenuSidebar">
+          {{userId.split('/')[1].split('@')[0]}}
+            <mat-icon>arrow_right</mat-icon>
+        </a>
+        <mat-divider></mat-divider>
+
+        <mat-menu #profilemenuSidebar="matMenu">
+            <button mat-menu-item routerLink="/user" routerLinkActive="active-link" (click)="sidenavClose(sidenav)">profile</button>
+            <button mat-menu-item (click)="logout()">logout</button>
+        </mat-menu>
+      </div>
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content id= "sidenav-content" class="sidenav-content">
+<!--
+    <mat-toolbar color="primary">
+      <app-headnav-list (sidenavToggle)="sidenav.toggle()"></app-headnav-list>
+    </mat-toolbar>
+-->
+    <main id="main">
+      <router-outlet></router-outlet>
+    </main>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+</div>

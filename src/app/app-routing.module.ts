@@ -5,6 +5,8 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { DevicesComponent } from './devices/devices.component';
 import { DeviceComponent } from './device/device.component';
+import { BleBeaconsComponent } from './ble-beacons/ble-beacons.component';
+import { BleBeaconComponent } from './ble-beacon/ble-beacon.component';
 import { DecodedMessagesComponent } from './decoded-messages/decoded-messages.component';
 import { ResolvedMessagesComponent } from './resolved-messages/resolved-messages.component';
 import { MessageComponent } from './message/message.component';
@@ -49,6 +51,17 @@ const routes: Routes = [
   {
     path: 'devices/:DevEUI',
     component: DeviceComponent,
+    canActivate: [ AuthGuard ],
+  },
+
+  {
+    path: 'ble-beacons',
+    component: BleBeaconsComponent,
+    canActivate: [ AuthGuard ],
+  },
+  {
+    path: 'ble-beacons/:bssid',
+    component: BleBeaconComponent,
     canActivate: [ AuthGuard ],
   },
 

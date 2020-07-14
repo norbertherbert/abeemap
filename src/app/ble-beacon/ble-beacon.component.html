@@ -1,0 +1,54 @@
+<h2 *ngIf="!formTypeIsCreate">Edit BLE Beacon</h2>
+<h2 *ngIf="formTypeIsCreate">Create new BLE Beacon</h2>
+
+<div class="input-container">
+<button mat-icon-button color="primary" (click)="goBack()">
+  <mat-icon matTooltip="Go back">arrow_back</mat-icon>
+</button>
+<button *ngIf="formTypeIsCreate" mat-icon-button color="primary" (click)="create()">
+  <mat-icon matTooltip="Create BLE Beacon">check</mat-icon>
+</button>
+<button *ngIf="!formTypeIsCreate" mat-icon-button color="primary" (click)="save()">
+  <mat-icon matTooltip="Save BLE Beacon">save</mat-icon>
+</button>
+  
+<mat-card *ngIf="bleBeacon " class="mat-elevation-z8">
+  <p>
+    <mat-form-field floatLabel="always"  >
+      <mat-label>bssid:</mat-label>
+      <input *ngIf="formTypeIsCreate" matInput [(ngModel)]="bleBeacon.bssid" type="text" id="bssid" />
+      <input *ngIf="!formTypeIsCreate" matInput [(ngModel)]="bleBeacon.bssid" type="text" id="bssid" readonly/>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field floatLabel="always"  >
+      <mat-label>name:</mat-label>
+      <input matInput [(ngModel)]="bleBeacon.name" type="text" id="name" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field floatLabel="always"  >
+      <mat-label>longitude:</mat-label>
+      <input matInput [(ngModel)]="bleBeacon.coordinates[0]" type="text" id="positionLon" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field floatLabel="always"  >
+      <mat-label>latitude:</mat-label>
+      <input matInput [(ngModel)]="bleBeacon.coordinates[1]" type="text" id="coordinatesLat" />
+    </mat-form-field>
+  </p>
+
+</mat-card>
+
+<button mat-icon-button color="primary" (click)="goBack()">
+  <mat-icon matTooltip="Go back">arrow_back</mat-icon>
+</button>
+<button *ngIf="formTypeIsCreate" mat-icon-button color="primary" (click)="create()">
+  <mat-icon matTooltip="Create BLE Beacon">check</mat-icon>
+</button>
+<button *ngIf="!formTypeIsCreate" mat-icon-button color="primary" (click)="save()">
+  <mat-icon matTooltip="Save BLE Beacon">save</mat-icon>
+</button>
+
+</div>

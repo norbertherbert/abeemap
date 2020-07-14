@@ -21,6 +21,13 @@ export class DxAdminApiService {
 
   getToken(grantType, clientId, clientSecret, renewToken, validityPeriod): Observable<any> {
 
+    // return of({
+    //   access_token: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6WyJTVUJTQ1JJQkVSOjEzMjgzOCJdL'
+    //   + 'CJleHAiOjE1OTQ3OTUwOTcsImp0aSI6IjA2M2YxOGM4LTJmYTUtNGE4MS1iOTY5LWM4Y2U5MDFmYmY5ZCIsImNsaWVudF'
+    //   + '9pZCI6ImNvbW11bml0eS1hcGkvbm9yYmVydC5oZXJiZXJ0K2NvbW11bml0eUBhY3RpbGl0eS5jb20ifQ.cJCoHTZQtjG'
+    //   + 'jfquCkDEw-O0fxhsA1ZoE0hvv8OQX--QRYIsiY1uSXdIDlSiI5hzniQu9Q90K9IZb5lR0aphSww'
+    // });
+
     const dxApiPrefix: string = clientId.split('/')[0];
 
     const formData = '' +

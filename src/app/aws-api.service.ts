@@ -14,7 +14,8 @@ const PALACE_HOTEL = { lon: 20.454031, lat: 44.816524 }; // d: 0.067911, 0.01500
 const SITE = PALACE_HOTEL;
 
 const HEADERS = new HttpHeaders()
-  .set('Content-Type', 'application/x-www-form-urlencoded')
+  // .set('Content-Type', 'application/x-www-form-urlencoded')
+  .set('Content-Type', 'application/json')
   .set('Accept', 'application/json');
 
 @Injectable({
@@ -81,12 +82,11 @@ export class AwsApiService {
 
   }
 
-  getBeacons() {
+  getBleBeaconFeatures() {
     let p = new HttpParams();
     p = p.set('customerId', this.authService.scope[0].split(':')[1]);
     return this.http.get<any>(
-      // (CONFIG.AWS_API_URL) + '/TPL_Demo_LocHistory',
-      'https://2r7c7pjlmc.execute-api.eu-central-1.amazonaws.com/dev/ble_beacon',
+      CONFIG.AWS_API_URL_NEW + '/ble_beacon',
       { params: p, headers: HEADERS }
     )
       .pipe(
@@ -114,57 +114,72 @@ export class AwsApiService {
       );
   }
 
-
-
-  getGateways() {
-    const data = [
-      {
-        name: 'Ufispace Pico #01',
-        gatewayId: 'c00100aa',
-        coordinates: [18.4416, 46.22697],
-        customerId: 132838,
-      },
-      {
-        name: 'Ufispace Pico #02',
-        gatewayId: 'c00100bb',
-        coordinates: [18.443, 46.2267],
-        customerId: 132838,
-      },
-
-
-      {
-        name: 'TERI UfiSpace Macro #1',
-        gatewayId: 'c00100cc',
-        coordinates: [SITE.lon - 0.00020, SITE.lat - 0.00006],
-        customerId: 133309,
-      },
-
-    ];
-    return of(
-      data.filter( (b) => ( b.customerId === parseInt(this.authService.scope[0].split(':')[1], 10) ) )
+  getBleBeacons() {
+    let p = new HttpParams();
+    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
+    return this.http.get<any>(
+      CONFIG.AWS_API_URL_NEW + '/ble_beacon',
+      { params: p, headers: HEADERS }
     )
       .pipe(
-        tap(_ => this.log(`Gateways have been retreived`)),
-        map( (points) => {
-          return {
-            type: 'FeatureCollection',
-            features: points.map( point => {
-              return {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: point.coordinates,
-                },
-                properties: {
-                  name: point.name,
-                  gatewayId: point.gatewayId,
-                  text: `Gateway: ${point.name}; ${point.gatewayId}`,
-                }
-              };
-            }),
-          };
-        }),
-        catchError(this.handleError<any>('getPoints'))
+        tap(_ => this.log(`Beacons have been retreived`)),
+        catchError(this.handleError<any>('getBeacons'))
+      );
+  }
+
+  getBleBeacon(bssid: string) {
+    let p = new HttpParams();
+    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
+    return this.http.get<any>(
+      CONFIG.AWS_API_URL_NEW + '/ble_beacon/' + bssid,
+      { params: p, headers: HEADERS }
+    )
+      .pipe(
+        map( data => data[0] ),
+        tap(_ => this.log(`Beacon have been retreived`)),
+        catchError(this.handleError<any>('getBeacon'))
+      );
+  }
+
+  createBleBeacon(bleBeacon: any) {
+    let p = new HttpParams();
+    bleBeacon.customerId = this.authService.scope[0].split(':')[1];
+    p = p.set('customerId', bleBeacon.customerId);
+    return this.http.post<any>(
+      CONFIG.AWS_API_URL_NEW + '/ble_beacon',
+      bleBeacon,
+      { params: p, headers: HEADERS }
+    )
+      .pipe(
+        tap(_ => this.log(`Beacon has been created`)),
+        catchError(this.handleError<any>('updateBleBeacon'))
+      );
+  }
+
+  updateBleBeacon(bssid: string, bleBeacon: any) {
+    let p = new HttpParams();
+    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
+    return this.http.put<any>(
+      CONFIG.AWS_API_URL_NEW + '/ble_beacon/' + bssid,
+      bleBeacon,
+      { params: p, headers: HEADERS }
+    )
+      .pipe(
+        tap(_ => this.log(`Beacon has been modified`)),
+        catchError(this.handleError<any>('updateBleBeacon'))
+      );
+  }
+
+  deleteBleBeacon(bssid: string) {
+    let p = new HttpParams();
+    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
+    return this.http.delete<any>(
+      CONFIG.AWS_API_URL_NEW + '/ble_beacon/' + bssid,
+      { params: p }
+    )
+      .pipe(
+        tap(_ => this.log(`Beacon has been deleted`)),
+        catchError(this.handleError<any>('deleteBleBeacon'))
       );
   }
 

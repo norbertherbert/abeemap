@@ -12,8 +12,11 @@ import { AppMaterialModule } from './app-material.module';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { AlertDialogComponent } from './dialogs/alert-dialog/alert-dialog.component';
 import { DeviceComponent } from './device/device.component';
 import { DevicesComponent } from './devices/devices.component';
+import { BleBeaconComponent } from './ble-beacon/ble-beacon.component';
+import { BleBeaconsComponent } from './ble-beacons/ble-beacons.component';
 import { MapComponent } from './map/map.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MessageComponent } from './message/message.component';
@@ -34,8 +37,11 @@ import { HomeComponent } from './home/home.component';
   declarations: [
     AppComponent,
     NavigationComponent,
+    AlertDialogComponent,
     DeviceComponent,
     DevicesComponent,
+    BleBeaconComponent,
+    BleBeaconsComponent,
     MapComponent,
     SettingsComponent,
     MessageComponent,
@@ -61,6 +67,9 @@ import { HomeComponent } from './home/home.component';
     AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     DxAdminApiService
+  ],
+  entryComponents: [
+    AlertDialogComponent,
   ],
   bootstrap: [
     AppComponent,

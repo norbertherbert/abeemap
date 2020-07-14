@@ -35,7 +35,8 @@ export const CONFIG  = {
   },
   DXAPI_DEFAULT_PREFIX: 'iot-api',
 
-  AWS_API_URL: 'https://xqiexi5h4f.execute-api.eu-central-1.amazonaws.com'
+  AWS_API_URL: 'https://xqiexi5h4f.execute-api.eu-central-1.amazonaws.com',
+  AWS_API_URL_NEW: 'https://2r7c7pjlmc.execute-api.eu-central-1.amazonaws.com/dev'
 
 };
 

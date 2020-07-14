@@ -10,8 +10,6 @@ import { Style, Icon, Circle, Fill, Stroke } from 'ol/style';
 import { DxCoreApiService } from '../dx-core-api.service';
 import { AwsApiService } from '../aws-api.service';
 
-const url = 'https://xqiexi5h4f.execute-api.eu-central-1.amazonaws.com/TPL_Demo_LocHistory';
-
 const defaultMapCenter = [11.6739826, 47.0622886];
 const defaultZoom = 5;
 
@@ -128,7 +126,7 @@ export class MapComponent implements OnInit {
   beaconsVectorSource = new VectorSource({
     format: new GeoJSON(),
     loader: (extent, resolution, projection) => {
-      this.awsApiService.getBeacons().subscribe( (beaconsGeoJSON) => {
+      this.awsApiService.getBleBeaconFeatures().subscribe( (beaconsGeoJSON) => {
         this.beaconsVectorSource.addFeatures(
           this.beaconsVectorSource.getFormat().readFeatures(
             beaconsGeoJSON,
@@ -149,7 +147,8 @@ export class MapComponent implements OnInit {
   gatewaysVectorSource = new VectorSource({
     format: new GeoJSON(),
     loader: (extent, resolution, projection) => {
-      this.awsApiService.getGateways().subscribe( (gatewaysGeoJSON) => {
+//      this.awsApiService.getGatewayFeatures().subscribe( (gatewaysGeoJSON) => {
+      this.dxCoreApiService.getGatewayFeatures().subscribe( (gatewaysGeoJSON) => {
         this.gatewaysVectorSource.addFeatures(
           this.gatewaysVectorSource.getFormat().readFeatures(
             gatewaysGeoJSON,
@@ -371,7 +370,7 @@ export class MapComponent implements OnInit {
           let time: string;
           let T: string;
           for (let i = (points.length - 1); i >= 0; i--) {
-            console.log(i);
+            // console.log(i);
             try {
               time = this.formatTime(points[i].time);
               T = parseFloat(points[i].processedFeed.temperatureMeasure).toFixed(1) + 'C°';

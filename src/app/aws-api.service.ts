@@ -82,7 +82,7 @@ export class AwsApiService {
 
   }
 
-  getBleBeaconFeatures() {
+  getBleBeacons() {
     let p = new HttpParams();
     p = p.set('customerId', this.authService.scope[0].split(':')[1]);
     return this.http.get<any>(
@@ -91,6 +91,14 @@ export class AwsApiService {
     )
       .pipe(
         tap(_ => this.log(`Beacons have been retreived`)),
+        catchError(this.handleError<any>('getBleBeacons'))
+      );
+  }
+
+  /* This format change is required for Open Layers */
+  getBleBeaconFeatures() {
+    return this.getBleBeacons()
+      .pipe(
         map( (points) => {
           return {
             type: 'FeatureCollection',
@@ -110,20 +118,8 @@ export class AwsApiService {
             }),
           };
         }),
-        catchError(this.handleError<any>('getBeacons'))
-      );
-  }
-
-  getBleBeacons() {
-    let p = new HttpParams();
-    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
-    return this.http.get<any>(
-      CONFIG.AWS_API_URL_NEW + '/ble_beacon',
-      { params: p, headers: HEADERS }
-    )
-      .pipe(
         tap(_ => this.log(`Beacons have been retreived`)),
-        catchError(this.handleError<any>('getBeacons'))
+        catchError(this.handleError<any>('getBleBeaconFeatures'))
       );
   }
 
@@ -137,7 +133,7 @@ export class AwsApiService {
       .pipe(
         map( data => data[0] ),
         tap(_ => this.log(`Beacon have been retreived`)),
-        catchError(this.handleError<any>('getBeacon'))
+        catchError( this.handleError<any>('getBleBeacon'))
       );
   }
 
@@ -188,22 +184,19 @@ export class AwsApiService {
 
     return (error: any): Observable<T> => {
 
-      console.error(`${operation} failed: ${error.error.message.message}`);
+      console.error(`${operation} failed: ${error.error.message}`);
 
-      if ( (error.error.code === 401) || (error.error.code === 403) ) {
-
-        this.snackBar.open(
-          error.error.message,
-          'login',
-          { panelClass: ['red-snackbar'] },
-        )
-          .onAction().subscribe(() => {
+      if ( error.status === 400 ) {
+        this.snackBar.open( error.error.message, 'x', { panelClass: ['red-snackbar'] } )
+          .onAction().subscribe( () => {} );
+        return of(error as T);
+      } else if ( (error.status === 401) || (error.status === 403) ) {
+        this.snackBar.open( error.error.message, 'login', { panelClass: ['red-snackbar'] } )
+          .onAction().subscribe( () => {
             // this.authService.deleteSession();
             // this.authService.login();
           });
-
-        // return null;
-
+        return of(error as T);
       } else {
         return throwError(error);
         // return of(result as T);

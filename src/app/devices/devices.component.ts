@@ -24,7 +24,7 @@ export class DevicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.get();
-    this.getGateways();
+    // this.getGateways();
   }
 
   get(): void {
@@ -42,6 +42,7 @@ export class DevicesComponent implements OnInit {
     );
   }
 
+/*
   getGateways(): void {
     // this.isLoading = true;
     this.dxCoreApiService.getGatewayFeatures().subscribe(
@@ -57,5 +58,6 @@ export class DevicesComponent implements OnInit {
       }
     );
   }
+*/
 
 }

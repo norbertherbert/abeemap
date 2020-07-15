@@ -17,13 +17,13 @@ export const environment = {
 
 export const CONFIG  = {
 
-  api_url: 'http://localhost:8083/tpl-api/v100/api',
-  sso_api_url: 'http://localhost:8082/sso-api/v100/api',
+  // api_url: 'http://localhost:8083/abeemap-api/v100/api',
+  // sso_api_url: 'http://localhost:8082/sso-api/v100/api',
   authorizationUrl: 'http://localhost:4200/login',
   response_type: 'token',
   redirect_uri: 'http://localhost:4200',
-  client_id: 'tpl-gui',
-  scope: 'sso_user tpl_user',
+  client_id: 'abeemap',
+  scope: 'sso_user abeemap_user',
 
   DXAPI_URLS: {
     'poc-api':             'https://dx-api-dev1.thingpark.com',
@@ -40,4 +40,4 @@ export const CONFIG  = {
 
 };
 
-// ng build --prod --build-optimizer --base-href /tpl-gui/
+// ng build --prod --build-optimizer --base-href /abeemap/

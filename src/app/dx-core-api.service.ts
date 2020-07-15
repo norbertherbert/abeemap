@@ -47,7 +47,7 @@ export class DxCoreApiService {
 
   }
 
-  getGatewayFeatures(): Observable<any> {
+  getGateways(): Observable<any> {
 
     const url = (CONFIG.DXAPI_URLS[ this.authService.userId.split('/')[0] ] || CONFIG.DXAPI_URLS[CONFIG.DXAPI_DEFAULT_PREFIX]) + '/core/latest/api/baseStations';
     const h = new HttpHeaders()
@@ -70,6 +70,16 @@ export class DxCoreApiService {
             )
           )
         )),
+        tap(_ => this.log('Gateways have been retrieved')),
+        catchError(this.handleError<any>('getGateways'))
+      );
+
+  }
+
+  /* This format change is required for Open Layers */
+  getGatewayFeatures(): Observable<any> {
+    return this.getGateways()
+      .pipe(
         map( (points: any) => {
           return {
             type: 'FeatureCollection',
@@ -89,65 +99,11 @@ export class DxCoreApiService {
             }),
           };
         }),
-        tap(_ => console.log('Gateway features have been retrieved')),
+        tap(_ => this.log('Gateways have been retrieved')),
         catchError(this.handleError<any>('getGateways'))
       );
-
   }
 
-/*
-  getGatewayFeatures_Mockup() {
-    const data = [
-      {
-        name: 'Ufispace Pico #01',
-        gatewayId: 'c00100aa',
-        coordinates: [18.4416, 46.22697],
-        customerId: 132838,
-      },
-      {
-        name: 'Ufispace Pico #02',
-        gatewayId: 'c00100bb',
-        coordinates: [18.443, 46.2267],
-        customerId: 132838,
-      },
-
-
-      {
-        name: 'TERI UfiSpace Macro #1',
-        gatewayId: 'c00100cc',
-        coordinates: [SITE.lon - 0.00020, SITE.lat - 0.00006],
-        customerId: 133309,
-      },
-
-    ];
-    return of(
-      data.filter( (b) => ( b.customerId === parseInt(this.authService.scope[0].split(':')[1], 10) ) )
-    )
-      .pipe(
-        tap(_ => this.log(`Gateways have been retreived`)),
-        map( (points) => {
-          return {
-            type: 'FeatureCollection',
-            features: points.map( point => {
-              return {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: point.coordinates,
-                },
-                properties: {
-                  name: point.name,
-                  gatewayId: point.gatewayId,
-                  text: `Gateway: ${point.name}; ${point.gatewayId}`,
-                }
-              };
-            }),
-          };
-        }),
-        catchError(this.handleError<any>('getPoints'))
-      );
-  }
-*/
 
   private handleError<T>(operation = 'operation', result?: T) {
 
@@ -182,7 +138,7 @@ export class DxCoreApiService {
       panelClass: ['green-snackbar'],
       duration: 2000,
     });
-    // console.log(message);
+    console.log(message);
   }
 
 }

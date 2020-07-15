@@ -4,13 +4,13 @@ export const environment = {
 
 export const CONFIG  = {
 
-  api_url: 'https://nano-things.net/tpl-api/v100/api',
-  sso_api_url: 'https://nano-things.net/sso-api/v100/api',
-  authorizationUrl: 'https://nano-things.net/tpl-gui/login',
+  // api_url: 'https://nano-things.net/abeemap-api/v100/api',
+  // sso_api_url: 'https://nano-things.net/sso-api/v100/api',
+  authorizationUrl: 'https://nano-things.net/abeemap/login',
   response_type: 'token',
-  redirect_uri: 'https://nano-things.net/tpl-gui',
-  client_id: 'tpl-gui',
-  scope: 'sso_user tpl_user',
+  redirect_uri: 'https://nano-things.net/abeemap',
+  client_id: 'abeemap',
+  scope: 'sso_user abeemap_user',
 
   DXAPI_URLS: {
     'poc-api':             'https://dx-api-dev1.thingpark.com',
@@ -27,8 +27,8 @@ export const CONFIG  = {
 
 };
 
-// ng build --prod --build-optimizer --base-href /tpl-gui/
+// ng build --prod --build-optimizer --base-href /abeemap/
 
-// rm /home/user/apps/html/tpl-gui/*
-// cp /home/user/devs/tpl-gui/dist/* /home/user/apps/html/tpl-gui/
+// rm /home/user/apps/html/abeemap/*
+// cp /home/user/devs/abeemap/dist/* /home/user/apps/html/abeemap/
 // sudo chcon -v -R --type=httpd_sys_content_t /home/user/apps/html

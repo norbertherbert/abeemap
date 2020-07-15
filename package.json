@@ -1,10 +1,10 @@
 {
-  "name": "tpl-gui",
+  "name": "abeemap",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --build-optimizer --base-href /tpl-gui/",
+    "build": "ng build --prod --build-optimizer --base-href /abeemap/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

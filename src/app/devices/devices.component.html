@@ -4,9 +4,17 @@
   
   <h2>{{componentTitle}}</h2>
 
-  <button mat-icon-button color="primary" routerLink="/{{elementName}}/create">
+  <p>
+      You can add/remove/update devices at
+      <a 
+        href="https://community.thingpark.io/tpe/" 
+        target="_blank"
+      >ThingPark Enterprise Network Server</a>
+      . These functions have not been implemented in this App yet.
+  </p>
+  <!-- <button mat-icon-button color="primary" routerLink="/{{elementName}}/create">
     <mat-icon matTooltip="Add new user">add</mat-icon>
-  </button>
+  </button> -->
   <button mat-icon-button color="primary" (click)="get()">
     <mat-icon matTooltip="Refresh">refresh</mat-icon>
   </button>

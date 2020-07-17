@@ -33,12 +33,11 @@ export class AwsApiService {
   getResolvedPoints(devEUI?: string, limit?: string) {
 
     let p = new HttpParams();
-    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
     if (devEUI) { p = p.set('devEUI', devEUI); }
     if (limit) { p = p.set('limit', limit); }
 
     return this.http.get<any>(
-      (CONFIG.AWS_API_URL) + '/TPL_Demo_LocHistory',
+      (CONFIG.AWS_API_URL) + '/resolved_messages',
       { params: p, headers: HEADERS }
     )
       .pipe(
@@ -51,13 +50,12 @@ export class AwsApiService {
   getDecodedPoints(devEUI?: string, messageType?: string, limit?: string) {
 
     let p = new HttpParams();
-    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
     if (devEUI) { p = p.set('devEUI', devEUI); }
     if (messageType) { p = p.set('messageType', messageType); }
     if (limit) { p = p.set('limit', limit); }
 
     return this.http.get<any>(
-      (CONFIG.AWS_API_URL) + '/TPL_Demo_fromTPE',
+      (CONFIG.AWS_API_URL) + '/decoded_messages',
       { params: p, headers: HEADERS }
     )
       .pipe(
@@ -83,11 +81,9 @@ export class AwsApiService {
   }
 
   getBleBeacons() {
-    let p = new HttpParams();
-    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
     return this.http.get<any>(
-      CONFIG.AWS_API_URL_NEW + '/ble_beacon',
-      { params: p, headers: HEADERS }
+      CONFIG.AWS_API_URL + '/ble_beacon',
+      { headers: HEADERS }
     )
       .pipe(
         tap(_ => this.log(`Beacons have been retreived`)),
@@ -124,11 +120,9 @@ export class AwsApiService {
   }
 
   getBleBeacon(bssid: string) {
-    let p = new HttpParams();
-    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
     return this.http.get<any>(
-      CONFIG.AWS_API_URL_NEW + '/ble_beacon/' + bssid,
-      { params: p, headers: HEADERS }
+      CONFIG.AWS_API_URL + '/ble_beacon/' + bssid,
+      { headers: HEADERS }
     )
       .pipe(
         map( data => data[0] ),
@@ -138,13 +132,10 @@ export class AwsApiService {
   }
 
   createBleBeacon(bleBeacon: any) {
-    let p = new HttpParams();
-    bleBeacon.customerId = this.authService.scope[0].split(':')[1];
-    p = p.set('customerId', bleBeacon.customerId);
     return this.http.post<any>(
-      CONFIG.AWS_API_URL_NEW + '/ble_beacon',
+      CONFIG.AWS_API_URL + '/ble_beacon',
       bleBeacon,
-      { params: p, headers: HEADERS }
+      { headers: HEADERS }
     )
       .pipe(
         tap(_ => this.log(`Beacon has been created`)),
@@ -153,12 +144,10 @@ export class AwsApiService {
   }
 
   updateBleBeacon(bssid: string, bleBeacon: any) {
-    let p = new HttpParams();
-    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
     return this.http.put<any>(
-      CONFIG.AWS_API_URL_NEW + '/ble_beacon/' + bssid,
+      CONFIG.AWS_API_URL + '/ble_beacon/' + bssid,
       bleBeacon,
-      { params: p, headers: HEADERS }
+      { headers: HEADERS }
     )
       .pipe(
         tap(_ => this.log(`Beacon has been modified`)),
@@ -167,11 +156,8 @@ export class AwsApiService {
   }
 
   deleteBleBeacon(bssid: string) {
-    let p = new HttpParams();
-    p = p.set('customerId', this.authService.scope[0].split(':')[1]);
     return this.http.delete<any>(
-      CONFIG.AWS_API_URL_NEW + '/ble_beacon/' + bssid,
-      { params: p }
+      CONFIG.AWS_API_URL + '/ble_beacon/' + bssid
     )
       .pipe(
         tap(_ => this.log(`Beacon has been deleted`)),

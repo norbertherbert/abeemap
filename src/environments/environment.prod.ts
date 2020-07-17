@@ -22,8 +22,18 @@ export const CONFIG  = {
   },
   DXAPI_DEFAULT_PREFIX: 'iot-api',
 
-  AWS_API_URL: 'https://xqiexi5h4f.execute-api.eu-central-1.amazonaws.com',
-  AWS_API_URL_NEW: 'https://2r7c7pjlmc.execute-api.eu-central-1.amazonaws.com/dev'
+  // AWS_API_URL: 'https://xqiexi5h4f.execute-api.eu-central-1.amazonaws.com',
+  AWS_API_URL: 'https://2r7c7pjlmc.execute-api.eu-central-1.amazonaws.com/dev',
+
+  FLOORPLAN_PATH: 'assets/floorplans/fp01a.png',
+  FLOORPLAN_EXT: {
+    south: 46.225631 + (150 / 100000),
+    north: 46.225631 + (-40 / 100000),
+    west: 18.441839 + (-100 / 100000),
+    east: 18.441839 + (280 / 100000)
+  },
+
+  DEFAULT_MAP_CENTER: [11.6739826, 47.0622886]
 
 };
 

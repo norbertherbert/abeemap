@@ -10,20 +10,9 @@ import { Style, Icon, Circle, Fill, Stroke } from 'ol/style';
 import { DxCoreApiService } from '../dx-core-api.service';
 import { AwsApiService } from '../aws-api.service';
 
-const defaultMapCenter = [11.6739826, 47.0622886];
-const defaultZoom = 5;
+import { CONFIG } from '../../environments/environment';
 
-const w = 280;
-const h = 150;
-const wo = -100;
-const ho = -40;
-const FP_EXT = {
-  south: 46.225631 + (h / 100000),
-  north: 46.225631 + (ho / 100000),
-  west: 18.441839 + (wo / 100000),
-  east: 18.441839 + (w / 100000)
-};
-const FP_URL = 'assets/floorplans/fp01a.png';
+const defaultZoom = 5;
 
 const greenCircleBackground  = [0x57, 0xc4, 0x51, 0.4]; // #57c451
 const greenCircleStroke      = [0x31, 0x85, 0x2c, 0.3]; // #31852c
@@ -99,7 +88,7 @@ export class MapComponent implements OnInit {
 
 
   mapView = new View({
-    center: fromLonLat(defaultMapCenter),
+    center: fromLonLat(CONFIG.DEFAULT_MAP_CENTER),
     zoom: defaultZoom
   });
 
@@ -114,8 +103,13 @@ export class MapComponent implements OnInit {
 
   /* FLOORPLAN LAYER */
   floorplanImageStaticSource = new ImageStaticSource({
-    url: FP_URL,
-    imageExtent: transformExtent([FP_EXT.east, FP_EXT.north, FP_EXT.west, FP_EXT.south], 'EPSG:4326', 'EPSG:3857')
+    url: CONFIG.FLOORPLAN_PATH,
+    imageExtent: transformExtent(
+      [
+        CONFIG.FLOORPLAN_EXT.east, CONFIG.FLOORPLAN_EXT.north, CONFIG.FLOORPLAN_EXT.west, CONFIG.FLOORPLAN_EXT.south
+      ],
+      'EPSG:4326', 'EPSG:3857'
+    )
   });
   floorplanImageLayer = new ImageLayer({
     source: this.floorplanImageStaticSource,

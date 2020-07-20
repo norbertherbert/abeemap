@@ -23,51 +23,51 @@
 
     <table mat-table [dataSource]="elements">
 
-        <!-- BSSID Column -->
-        <ng-container matColumnDef="bssid">
-          <th mat-header-cell *matHeaderCellDef> BSSID </th>
-          <td mat-cell *matCellDef="let element"> {{element.bssid}} </td>
-        </ng-container>
-      
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
+      <!-- BSSID Column -->
+      <ng-container matColumnDef="bssid">
+        <th mat-header-cell *matHeaderCellDef> BSSID </th>
+        <td mat-cell *matCellDef="let element"> {{element.bssid}} </td>
+      </ng-container>
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
 
-        <!-- Longitude Column -->
-        <ng-container matColumnDef="lon">
-          <th mat-header-cell *matHeaderCellDef> Longitude </th>
-          <td mat-cell *matCellDef="let element"> {{element.coordinates[0]}} </td>
-        </ng-container>
+      <!-- Longitude Column -->
+      <ng-container matColumnDef="lon">
+        <th mat-header-cell *matHeaderCellDef> Longitude </th>
+        <td mat-cell *matCellDef="let element"> {{element.coordinates[0]}} </td>
+      </ng-container>
 
-        <!-- Latitude Column -->
-        <ng-container matColumnDef="lat">
-          <th mat-header-cell *matHeaderCellDef> Latitude </th>
-          <td mat-cell *matCellDef="let element"> {{element.coordinates[1]}} </td>
-        </ng-container>
+      <!-- Latitude Column -->
+      <ng-container matColumnDef="lat">
+        <th mat-header-cell *matHeaderCellDef> Latitude </th>
+        <td mat-cell *matCellDef="let element"> {{element.coordinates[1]}} </td>
+      </ng-container>
 
-        <!-- Tools Column -->
-        <ng-container matColumnDef="tools">
-          <th mat-header-cell *matHeaderCellDef> Tools </th>
-          <td mat-cell *matCellDef="let element" class="tools"> 
-            <button
-              mat-icon-button color="primary" 
-              routerLink="/{{elementsRouteName}}/{{element[elementIdPropertyName]}}"
-            >
-              <mat-icon matTooltip="Edit">edit</mat-icon>
-            </button>
-            &nbsp;
-            <button mat-icon-button color="primary" (click)="delete(element)">
-              <mat-icon matTooltip="Delete">delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <!-- Tools Column -->
+      <ng-container matColumnDef="tools">
+        <th mat-header-cell *matHeaderCellDef> Tools </th>
+        <td mat-cell *matCellDef="let element" class="tools"> 
+          <button
+            mat-icon-button color="primary" 
+            routerLink="/{{elementsRouteName}}/{{element[elementIdPropertyName]}}"
+          >
+            <mat-icon matTooltip="Edit">edit</mat-icon>
+          </button>
+          &nbsp;
+          <button mat-icon-button color="primary" (click)="delete(element)">
+            <mat-icon matTooltip="Delete">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-      </table>
+    </table>
   </div>
 
 </div>

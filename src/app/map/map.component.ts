@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Map, View, Overlay, Feature } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer, Image as ImageLayer } from 'ol/layer';
 import { fromLonLat, transform, transformExtent } from 'ol/proj';
@@ -87,12 +88,11 @@ export class MapComponent implements OnInit {
   points = [];
 
 
+  /* MAP VIEW */
   mapView = new View({
     center: fromLonLat(CONFIG.DEFAULT_MAP_CENTER),
-    zoom: defaultZoom
+    zoom: CONFIG.DEFAULT_MAP_ZOOM
   });
-
-
 
   /* MAP LAYER */
   mapTileSource = new OSMSource();

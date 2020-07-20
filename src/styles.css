@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body, app-devices, app-map, app-resolved-messages, app-decoded-messages, app-home { 
+html, body, app-devices, app-map, app-resolved-messages, app-decoded-messages, app-home, app-ble-beacon { 
     height: 100%;
     margin: 0px;
     border: 0px;

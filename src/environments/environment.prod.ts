@@ -26,6 +26,7 @@ export const CONFIG  = {
   AWS_API_URL: 'https://2r7c7pjlmc.execute-api.eu-central-1.amazonaws.com/dev',
 
   FLOORPLAN_PATH: 'assets/floorplans/fp01a.png',
+  FLOORPLAN_COORDINATES: [18.441839, 46.225631],
   FLOORPLAN_EXT: {
     south: 46.225631 + (150 / 100000),
     north: 46.225631 + (-40 / 100000),
@@ -33,7 +34,8 @@ export const CONFIG  = {
     east: 18.441839 + (280 / 100000)
   },
 
-  DEFAULT_MAP_CENTER: [11.6739826, 47.0622886]
+  DEFAULT_MAP_CENTER: [11.6739826, 47.0622886],
+  DEFAULT_MAP_ZOOM: 5
 
 };
 

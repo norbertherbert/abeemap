@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 
@@ -33,6 +33,36 @@ import { DxAdminApiService } from './dx-admin-api.service';
 import { HomeComponent } from './home/home.component';
 
 
+import { of, Observable, ObservableInput } from '../../node_modules/rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { ConfigService } from './config.service';
+
+function loadConfig(httpClient: HttpClient, configService: ConfigService): (() => Promise<boolean>) {
+  return (): Promise<boolean> => {
+    return new Promise<boolean>((resolve: (a: boolean) => void): void => {
+      httpClient.get('assets/config.json')
+        .pipe(
+          map((x: ConfigService) => {
+            configService.AWS_API_URL = x.AWS_API_URL;
+            configService.DXAPI_URLS = x.DXAPI_URLS;
+            configService.DXAPI_DEFAULT_PREFIX = x.DXAPI_DEFAULT_PREFIX;
+            configService.DEFAULT_MAP_CENTER = x.DEFAULT_MAP_CENTER;
+            configService.DEFAULT_MAP_ZOOM = x.DEFAULT_MAP_ZOOM;
+            configService.FLOORPLAN_PATH = x.FLOORPLAN_PATH;
+            configService.FLOORPLAN_EXT = x.FLOORPLAN_EXT;
+            configService.OAUTH2 = x.OAUTH2;
+
+            resolve(true);
+          }),
+          catchError( (err: { status: number }, caught: Observable<void>): ObservableInput<{}> => {
+            resolve(false);
+            return of({});
+          })
+        ).subscribe();
+    });
+  };
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,9 +94,18 @@ import { HomeComponent } from './home/home.component';
     AppMaterialModule,
   ],
   providers: [
-    AuthService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadConfig,
+      deps: [
+        HttpClient,
+        ConfigService
+      ],
+      multi: true
+    },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    DxAdminApiService
+    DxAdminApiService,
+    AuthService,
   ],
   entryComponents: [
     AlertDialogComponent,

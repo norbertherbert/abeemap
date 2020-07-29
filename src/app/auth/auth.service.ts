@@ -1,4 +1,5 @@
 import { CONFIG } from '../../environments/environment';
+import { ConfigService } from '../config.service';
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -26,7 +27,9 @@ export class AuthService {
   loggedIn$ = new BehaviorSubject<boolean>(false);
   // loggedInAsAdmin = false;
 
-  constructor() {
+  constructor(
+    private configService: ConfigService,
+  ) {
     const token = getCookie('access_token_' + CONFIG.client_id);
     if (token) {
       this.setSession(token);

@@ -5,7 +5,8 @@ import { Observable , of, throwError, } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MatSnackBar} from '@angular/material/snack-bar';
 
-import { CONFIG } from '../environments/environment';
+// import { CONFIG } from '../environments/environment';
+import { ConfigService } from './config.service';
 
 import { AuthService } from './auth/auth.service';
 
@@ -27,8 +28,12 @@ export class AwsApiService {
     private http: HttpClient,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-  ) { }
+    private configService: ConfigService,
+  ) {
+    this.awsApiUrl = this.configService.AWS_API_URL || `https://${window.location.hostname}/api`;
+  }
 
+  awsApiUrl: string;
 
   getResolvedPoints(devEUI?: string, limit?: string) {
 
@@ -37,7 +42,8 @@ export class AwsApiService {
     if (limit) { p = p.set('limit', limit); }
 
     return this.http.get<any>(
-      (CONFIG.AWS_API_URL) + '/resolved_messages',
+      // (CONFIG.AWS_API_URL) + '/resolved_messages',
+      this.awsApiUrl + '/resolved_messages',
       { params: p, headers: HEADERS }
     )
       .pipe(
@@ -55,7 +61,8 @@ export class AwsApiService {
     if (limit) { p = p.set('limit', limit); }
 
     return this.http.get<any>(
-      (CONFIG.AWS_API_URL) + '/decoded_messages',
+      // (CONFIG.AWS_API_URL) + '/decoded_messages',
+      this.awsApiUrl + '/decoded_messages',
       { params: p, headers: HEADERS }
     )
       .pipe(
@@ -81,8 +88,10 @@ export class AwsApiService {
   }
 
   getBleBeacons() {
+
     return this.http.get<any>(
-      CONFIG.AWS_API_URL + '/ble_beacon',
+      // CONFIG.AWS_API_URL + '/ble_beacon',
+      this.awsApiUrl + '/ble_beacon',
       { headers: HEADERS }
     )
       .pipe(
@@ -120,8 +129,10 @@ export class AwsApiService {
   }
 
   getBleBeacon(bssid: string) {
+
     return this.http.get<any>(
-      CONFIG.AWS_API_URL + '/ble_beacon/' + bssid,
+      // CONFIG.AWS_API_URL + '/ble_beacon/' + bssid,
+      this.awsApiUrl + '/ble_beacon/' + bssid,
       { headers: HEADERS }
     )
       .pipe(
@@ -132,8 +143,10 @@ export class AwsApiService {
   }
 
   createBleBeacon(bleBeacon: any) {
+
     return this.http.post<any>(
-      CONFIG.AWS_API_URL + '/ble_beacon',
+      // CONFIG.AWS_API_URL + '/ble_beacon',
+      this.awsApiUrl + '/ble_beacon',
       bleBeacon,
       { headers: HEADERS }
     )
@@ -144,8 +157,10 @@ export class AwsApiService {
   }
 
   updateBleBeacon(bssid: string, bleBeacon: any) {
+
     return this.http.put<any>(
-      CONFIG.AWS_API_URL + '/ble_beacon/' + bssid,
+      // CONFIG.AWS_API_URL + '/ble_beacon/' + bssid,
+      this.awsApiUrl + '/ble_beacon/' + bssid,
       bleBeacon,
       { headers: HEADERS }
     )
@@ -156,8 +171,10 @@ export class AwsApiService {
   }
 
   deleteBleBeacon(bssid: string) {
+
     return this.http.delete<any>(
-      CONFIG.AWS_API_URL + '/ble_beacon/' + bssid
+      // CONFIG.AWS_API_URL + '/ble_beacon/' + bssid
+      this.awsApiUrl + '/ble_beacon/' + bssid
     )
       .pipe(
         tap(_ => this.log(`Beacon has been deleted`)),

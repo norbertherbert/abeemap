@@ -1,0 +1,341 @@
+openapi: 3.0.1
+info:
+  title: AbeeMap_API
+  description: This is the API of the AbeeMap demo application developed for Abeeway tracker devices.
+  version: 1.0.0
+servers:
+  - url: 'https://2r7c7pjlmc.execute-api.eu-central-1.amazonaws.com/{basePath}'
+    variables:
+      basePath:
+        default: dev
+tags:
+- name: 'BLE Beacons'
+  description: 'Operations for managing BLE Beacons'
+- name: 'Device Messages'
+  description: 'Operations for managing Device Messages'
+paths:
+  /ble_beacon:
+    get:
+      tags: 
+      - 'BLE Beacons'
+      operationId: getBleBeacons
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          schema:
+            type: string
+            default: 132838
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfBleBeacon'
+        '400':
+          description: 400 response
+          content: {}
+        '404':
+          description: 404 response
+          content: {}
+      x-amazon-apigateway-integration:
+        $ref: '#/components/x-amazon-apigateway-integrations/getBleBeacons'
+    post:
+      tags: 
+      - 'BLE Beacons'
+      operationId: addBleBeacon
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BleBeacon'
+        required: true
+      responses:
+        '405':
+          description: 405 response
+          content: {}
+      x-amazon-apigateway-integration:
+        $ref: '#/components/x-amazon-apigateway-integrations/addBleBeacon'
+  '/ble_beacon/{bssid}':
+    get:
+      tags: 
+      - 'BLE Beacons'
+      operationId: getBleBeacon
+      parameters:
+        - name: bssid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          schema:
+            type: string
+            default: 132838
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BleBeacon'
+        '400':
+          description: 400 response
+          content: {}
+        '404':
+          description: 404 response
+          content: {}
+      x-amazon-apigateway-integration:
+        $ref: '#/components/x-amazon-apigateway-integrations/getBleBeacon'
+    put:
+      tags: 
+      - 'BLE Beacons'
+      operationId: updateBleBeacon
+      parameters:
+        - name: bssid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          schema:
+            type: string
+            default: 132838
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BleBeaconUpdate'
+        required: true
+      responses:
+        '405':
+          description: 405 response
+          content: {}
+      x-amazon-apigateway-integration:
+        $ref: '#/components/x-amazon-apigateway-integrations/updateBleBeacon'
+    delete:
+      tags: 
+      - 'BLE Beacons'
+      operationId: deleteBleBeacon
+      parameters:
+        - name: bssid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          schema:
+            type: string
+            default: 132838
+      responses:
+        '400':
+          description: 400 response
+          content: {}
+        '404':
+          description: 404 response
+          content: {}
+      x-amazon-apigateway-integration:
+        $ref: '#/components/x-amazon-apigateway-integrations/deleteBleBeacon'
+  /resolved_messages:
+    get:
+      tags: 
+      - 'Device Messages'
+      operationId: getResolvedMsg
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          schema:
+            type: string
+            default: 132838
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfResolvedMsg'
+        '400':
+          description: 400 response
+          content: {}
+        '404':
+          description: 404 response
+          content: {}
+      x-amazon-apigateway-integration:
+        $ref: '#/components/x-amazon-apigateway-integrations/getResolvedMsg'
+  /decoded_messages:
+    get:
+      tags: 
+      - 'Device Messages'
+      operationId: getDecodedMsg
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          schema:
+            type: string
+            default: 132838
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfDecodedMsg'
+        '400':
+          description: 400 response
+          content: {}
+        '404':
+          description: 404 response
+          content: {}
+      x-amazon-apigateway-integration:
+        $ref: '#/components/x-amazon-apigateway-integrations/getDecodedMsg'
+  /messages:
+    post:
+      tags: 
+      - 'Device Messages'
+      operationId: addMsg
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Msg'
+        required: true
+      responses:
+        '405':
+          description: 405 response
+          content: {}
+      x-amazon-apigateway-integration:
+        $ref: '#/components/x-amazon-apigateway-integrations/addMsg'
+components:
+  schemas:
+    Msg:
+      type: object
+    ArrayOfResolvedMsg:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResolvedMsg'
+    ArrayOfBleBeacon:
+      type: array
+      items:
+        $ref: '#/components/schemas/BleBeacon'
+    Coordinates:
+      type: array
+      items:
+        type: number
+      example:
+      - 18.001
+      - 45.001
+    DecodedMsg:
+      type: object
+    BleBeacon:
+      required:
+        - bssid
+        - coordinates
+        - customerId
+        - name
+      type: object
+      properties:
+        bssid:
+          type: string
+        name:
+          type: string
+        customerId:
+          type: integer
+          format: int32
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+      example:
+        bssid: 'aa:bb:cc:dd:ee:ff'
+        name: 'Test Beacon'
+        customerId: '132838'
+        coordinates:
+        - 19.111
+        - 45.111
+    ArrayOfDecodedMsg:
+      type: array
+      items:
+        $ref: '#/components/schemas/DecodedMsg'
+    BleBeaconUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated name of the bleBeacon
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+    ResolvedMsg:
+      type: object
+
+  x-amazon-apigateway-integrations:
+    getBleBeacons:
+      payloadFormatVersion: "1.0"
+      type: "aws_proxy"
+      httpMethod: "POST"
+      uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:076081621542:function:AbeeMap_getBleBeacons/invocations"
+      connectionType: "INTERNET"
+    addBleBeacon:
+      payloadFormatVersion: "1.0"
+      type: "aws_proxy"
+      httpMethod: "POST"
+      uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:076081621542:function:AbeeMap_addBleBeacon/invocations"
+      connectionType: "INTERNET"
+    getBleBeacon:
+      payloadFormatVersion: "1.0"
+      type: "aws_proxy"
+      httpMethod: "POST"
+      uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:076081621542:function:AbeeMap_getBleBeacon/invocations"
+      connectionType: "INTERNET"
+    updateBleBeacon:
+      payloadFormatVersion: "1.0"
+      type: "aws_proxy"
+      httpMethod: "POST"
+      uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:076081621542:function:AbeeMap_updateBleBeacon/invocations"
+      connectionType: "INTERNET"
+    deleteBleBeacon:
+      payloadFormatVersion: "1.0"
+      type: "aws_proxy"
+      httpMethod: "POST"
+      uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:076081621542:function:AbeeMap_deleteBleBeacon/invocations"
+      connectionType: "INTERNET"
+    getResolvedMsg:
+      payloadFormatVersion: "1.0"
+      type: "aws_proxy"
+      httpMethod: "POST"
+      uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:076081621542:function:AbeeMap_getResolvedMsg/invocations"
+      connectionType: "INTERNET"
+    getDecodedMsg:
+      payloadFormatVersion: "1.0"
+      type: "aws_proxy"
+      httpMethod: "POST"
+      uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:076081621542:function:AbeeMap_getDecodedMsg/invocations"
+      connectionType: "INTERNET"
+    addMsg:
+      payloadFormatVersion: "1.0"
+      type: "aws_proxy"
+      httpMethod: "POST"
+      uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:076081621542:function:AbeeMap_addMsg/invocations"
+      connectionType: "INTERNET"
+x-amazon-apigateway-cors:
+  allowMethods:
+  - "*"
+  allowHeaders:
+  - "authorization"
+  - "content-type"
+  maxAge: 0
+  allowCredentials: false
+  allowOrigins:
+  - "*"
+x-amazon-apigateway-importexport-version: "1.0"

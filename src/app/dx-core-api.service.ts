@@ -6,7 +6,9 @@ import { mergeMap} from 'rxjs/operators';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { CONFIG } from '../environments/environment';
+// import { CONFIG } from '../environments/environment';
+import { ConfigService } from './config.service';
+
 import { AuthService } from './auth/auth.service';
 
 @Injectable({
@@ -18,6 +20,7 @@ export class DxCoreApiService {
     private http: HttpClient,
     private snackBar: MatSnackBar,
     private authService: AuthService,
+    private configService: ConfigService,
   ) { }
 
   getDevices(): Observable<any> {
@@ -29,7 +32,10 @@ export class DxCoreApiService {
       // .set('validityPeriod', encodeURIComponent(validityPeriod));
 
     return this.http.get<any>(
-      (CONFIG.DXAPI_URLS[ this.authService.userId.split('/')[0] ] || CONFIG.DXAPI_URLS[CONFIG.DXAPI_DEFAULT_PREFIX]) + '/core/latest/api/devices',
+      (
+        this.configService.DXAPI_URLS[ this.authService.userId.split('/')[0] ] ||
+        this.configService.DXAPI_URLS[this.configService.DXAPI_DEFAULT_PREFIX]
+      ) + '/core/latest/api/devices',
       {
         // params: p,
         headers: h
@@ -49,7 +55,10 @@ export class DxCoreApiService {
 
   getGateways(): Observable<any> {
 
-    const url = (CONFIG.DXAPI_URLS[ this.authService.userId.split('/')[0] ] || CONFIG.DXAPI_URLS[CONFIG.DXAPI_DEFAULT_PREFIX]) + '/core/latest/api/baseStations';
+    const url = (
+      this.configService.DXAPI_URLS[ this.authService.userId.split('/')[0] ] ||
+      this.configService.DXAPI_URLS[this.configService.DXAPI_DEFAULT_PREFIX]
+    ) + '/core/latest/api/baseStations';
     const h = new HttpHeaders()
       .set('Accept', 'application/json');
     // const p = new HttpParams()

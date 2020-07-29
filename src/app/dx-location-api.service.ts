@@ -5,7 +5,9 @@ import { Observable ,  of, throwError, } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { CONFIG } from '../environments/environment';
+// import { CONFIG } from '../environments/environment';
+import { ConfigService } from './config.service';
+
 import { AuthService } from './auth/auth.service';
 
 @Injectable({
@@ -17,5 +19,6 @@ export class DxLocationApiService {
     private http: HttpClient,
     private snackBar: MatSnackBar,
     private authService: AuthService,
+    private configService: ConfigService,
   ) { }
 }

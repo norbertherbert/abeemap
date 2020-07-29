@@ -11,7 +11,8 @@ import { Style, Icon, Circle, Fill, Stroke } from 'ol/style';
 import { DxCoreApiService } from '../dx-core-api.service';
 import { AwsApiService } from '../aws-api.service';
 
-import { CONFIG } from '../../environments/environment';
+// import { CONFIG } from '../environments/environment';
+import { ConfigService } from '../config.service';
 
 const defaultZoom = 5;
 
@@ -90,8 +91,8 @@ export class MapComponent implements OnInit {
 
   /* MAP VIEW */
   mapView = new View({
-    center: fromLonLat(CONFIG.DEFAULT_MAP_CENTER),
-    zoom: CONFIG.DEFAULT_MAP_ZOOM
+    center: fromLonLat(this.configService.DEFAULT_MAP_CENTER),
+    zoom: this.configService.DEFAULT_MAP_ZOOM
   });
 
   /* MAP LAYER */
@@ -103,10 +104,11 @@ export class MapComponent implements OnInit {
 
   /* FLOORPLAN LAYER */
   floorplanImageStaticSource = new ImageStaticSource({
-    url: CONFIG.FLOORPLAN_PATH,
+    url: this.configService.FLOORPLAN_PATH,
     imageExtent: transformExtent(
       [
-        CONFIG.FLOORPLAN_EXT.east, CONFIG.FLOORPLAN_EXT.north, CONFIG.FLOORPLAN_EXT.west, CONFIG.FLOORPLAN_EXT.south
+        this.configService.FLOORPLAN_EXT.east, this.configService.FLOORPLAN_EXT.north,
+        this.configService.FLOORPLAN_EXT.west, this.configService.FLOORPLAN_EXT.south
       ],
       'EPSG:4326', 'EPSG:3857'
     )
@@ -187,6 +189,7 @@ export class MapComponent implements OnInit {
   constructor(
     private dxCoreApiService: DxCoreApiService,
     private awsApiService: AwsApiService,
+    private configService: ConfigService,
   ) { }
 
   ngOnInit(): void {

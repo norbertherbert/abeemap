@@ -5,7 +5,10 @@ import { Observable ,  of, throwError, } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MatSnackBar} from '@angular/material/snack-bar';
 
-import { CONFIG } from '../environments/environment';
+// import { CONFIG } from '../environments/environment';
+import { ConfigService } from './config.service';
+
+
 // import { AuthService } from './auth/auth.service';
 
 @Injectable({
@@ -17,6 +20,7 @@ export class DxAdminApiService {
     private http: HttpClient,
     private snackBar: MatSnackBar,
     // private authService: AuthService,
+    private configService: ConfigService,
   ) { }
 
   getToken(grantType, clientId, clientSecret, renewToken, validityPeriod): Observable<any> {
@@ -43,7 +47,7 @@ export class DxAdminApiService {
       .set('validityPeriod', encodeURIComponent(validityPeriod));
 
     return this.http.post<any>(
-      (CONFIG.DXAPI_URLS[dxApiPrefix] || CONFIG.DXAPI_URLS[CONFIG.DXAPI_DEFAULT_PREFIX]) + '/admin/latest/api/oauth/token',
+      (this.configService.DXAPI_URLS[dxApiPrefix] || this.configService.DXAPI_URLS[this.configService.DXAPI_DEFAULT_PREFIX]) + '/admin/latest/api/oauth/token',
       formData,
       { params: p, headers: h }
     )

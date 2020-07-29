@@ -6,9 +6,22 @@ export const CONFIG  = {
 
   // api_url: 'https://nano-things.net/abeemap-api/v100/api',
   // sso_api_url: 'https://nano-things.net/sso-api/v100/api',
-  authorizationUrl: 'https://nano-things.net/abeemap/login',
+
+  // authorizationUrl: 'https://nano-things.net/abeemap/login',
+  ////// authorizationUrl: '/dev/abeemap/login',
+  // authorizationUrl: 'https://abeemap.s3.eu-central-1.amazonaws.com/index.html',
+  // authorizationUrl: 'https://2r7c7pjlmc.execute-api.eu-central-1.amazonaws.com/dev/abeemap/login',
+  // authorizationUrl: 'http://' + window.location.hostname + '/login',
+  authorizationUrl: '/login',
+
   response_type: 'token',
-  redirect_uri: 'https://nano-things.net/abeemap',
+
+  // redirect_uri: 'https://nano-things.net/abeemap',
+  ////// redirect_uri: '/dev/abeemap',
+  // redirect_uri: 'https://abeemap.s3.eu-central-1.amazonaws.com/index.html',
+  // redirect_uri: 'https://2r7c7pjlmc.execute-api.eu-central-1.amazonaws.com/dev/abeemap',
+  redirect_uri: '/',
+
   client_id: 'abeemap',
   scope: 'sso_user abeemap_user',
 
@@ -22,8 +35,10 @@ export const CONFIG  = {
   },
   DXAPI_DEFAULT_PREFIX: 'iot-api',
 
-  // AWS_API_URL: 'https://xqiexi5h4f.execute-api.eu-central-1.amazonaws.com',
-  AWS_API_URL: 'https://2r7c7pjlmc.execute-api.eu-central-1.amazonaws.com/dev',
+  // AWS_API_URL: 'https://2r7c7pjlmc.execute-api.eu-central-1.amazonaws.com/dev',
+  //// AWS_API_URL: window.location.hostname + '/dev',
+  ////// AWS_API_URL: '/dev',
+  // AWS_API_URL is loaded by APP_INITIALIZER!
 
   FLOORPLAN_PATH: 'assets/floorplans/fp01a.png',
   FLOORPLAN_COORDINATES: [18.441839, 46.225631],
